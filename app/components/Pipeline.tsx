@@ -37,7 +37,7 @@ const PipelineContainer = styled.div`
   justify-content: flex-start;
   min-height: 100vh;
   background: #0f0f0f;
-  padding: 2rem;
+  padding: 1.5rem;
   position: relative;
   overflow: hidden;
 `;
@@ -90,17 +90,17 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1600px;
-  gap: 3rem;
+  max-width: 1400px;
+  gap: 1.5rem;
 `;
 
 const Header = styled.div`
   text-align: center;
-  margin: 4rem 0 2rem;
+  margin: 1.5rem 0 1rem;
 `;
 
 const Title = styled.h1`
-  font-size: 5rem;
+  font-size: 3.5rem;
   font-weight: 900;
   background: linear-gradient(135deg, #ff3366 0%, #ffaa00 50%, #00ff99 100%);
   background-size: 200% auto;
@@ -114,27 +114,27 @@ const Title = styled.h1`
   line-height: 1;
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 `;
 
 const Subtitle = styled.p`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.5);
   font-weight: 300;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 
   @media (max-width: 768px) {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 `;
 
 const MainContent = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2rem;
+  grid-template-columns: 240px 1fr;
+  gap: 1.5rem;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -144,7 +144,7 @@ const MainContent = styled.div`
 const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 
   @media (max-width: 1024px) {
     flex-direction: row;
@@ -186,8 +186,8 @@ const StageCard = styled.button<{
         : props.$completed
         ? "rgba(255,255,255,0.2)"
         : "rgba(255,255,255,0.05)"};
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  padding: 1.25rem 1rem;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
@@ -230,7 +230,7 @@ const StageCard = styled.button<{
 `;
 
 const StageNumber = styled.div<{ $color: string }>`
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: ${(props) => props.$color};
   font-weight: 800;
   margin-bottom: 0.75rem;
@@ -239,7 +239,7 @@ const StageNumber = styled.div<{ $color: string }>`
 `;
 
 const StageName = styled.div`
-  font-size: 1.375rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.03em;
@@ -247,7 +247,7 @@ const StageName = styled.div`
 `;
 
 const StageDescription = styled.div`
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.5;
 `;
@@ -255,9 +255,9 @@ const StageDescription = styled.div`
 const VisualizationArea = styled.div`
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 30px;
-  padding: 4rem;
-  min-height: 700px;
+  border-radius: 24px;
+  padding: 2.5rem;
+  min-height: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -298,19 +298,28 @@ const SvgContainer = styled.div`
 
 const ControlPanel = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  position: sticky;
+  bottom: 2rem;
+  z-index: 100;
+  padding: 1rem;
+  background: rgba(15, 15, 15, 0.9);
+  border-radius: 60px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
 `;
 
 const ActionButton = styled.button<{
   $variant?: "primary" | "secondary";
   $color?: string;
 }>`
-  padding: 1.25rem 3.5rem;
-  font-size: 1.125rem;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
   font-weight: 700;
   color: ${(props) => (props.$variant === "primary" ? "#0f0f0f" : "#ffffff")};
   background: ${(props) =>
@@ -321,7 +330,7 @@ const ActionButton = styled.button<{
     ${(props) =>
       props.$variant === "primary"
         ? "transparent"
-        : "rgba(255, 255, 255, 0.2)"};
+        : "rgba(255, 255, 255, 0.3)"};
   border-radius: 60px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -331,7 +340,7 @@ const ActionButton = styled.button<{
   overflow: hidden;
   box-shadow: ${(props) =>
     props.$variant === "primary"
-      ? `0 10px 40px ${props.$color || "#ff3366"}40`
+      ? `0 10px 40px ${props.$color || "#ff3366"}60`
       : "none"};
 
   &::before {
@@ -378,17 +387,18 @@ const ActionButton = styled.button<{
 
 const ResultsContainer = styled.div`
   width: 100%;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 const ResultsTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   background: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.5));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.03em;
   text-transform: uppercase;
 `;

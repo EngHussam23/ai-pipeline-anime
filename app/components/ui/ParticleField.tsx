@@ -11,7 +11,7 @@ const Canvas = styled.canvas`
   height: 100%;
   pointer-events: none;
   z-index: 5;
-  opacity: 0.6;
+  opacity: 0.4;
 `;
 
 interface Particle {
@@ -46,16 +46,16 @@ export const ParticleField: React.FC = () => {
 
     // Create particles
     const colors = ["#ff3366", "#ffaa00", "#00ff99", "#ff6b9d"];
-    const particleCount = 25; // Reduced from 50 for better performance
+    const particleCount = 20; // Reduced from 25 for smaller canvas
 
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.3, // Reduced speed
       vy: (Math.random() - 0.5) * 0.3, // Reduced speed
-      size: Math.random() * 2 + 1, // Smaller particles
+      size: Math.random() * 1.5 + 0.5, // Smaller particles
       color: colors[Math.floor(Math.random() * colors.length)],
-      alpha: Math.random() * 0.5 + 0.3,
+      alpha: Math.random() * 0.4 + 0.2,
     }));
 
     // Animation loop
