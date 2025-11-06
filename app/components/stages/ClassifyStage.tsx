@@ -9,12 +9,18 @@ import { usePipeline } from "@/app/context/PipelineContext";
 
 interface ClassifyStageProps {
   onComplete?: () => void;
+  isActive?: boolean;
 }
 
-export const ClassifyStage: React.FC<ClassifyStageProps> = ({ onComplete }) => {
+export const ClassifyStage: React.FC<ClassifyStageProps> = ({
+  onComplete,
+  isActive = false,
+}) => {
   const { setClassification } = usePipeline();
 
   useEffect(() => {
+    if (!isActive) return;
+
     const runAnimation = async () => {
       // Set classification data
       setClassification({
@@ -56,7 +62,7 @@ export const ClassifyStage: React.FC<ClassifyStageProps> = ({ onComplete }) => {
     };
 
     runAnimation();
-  }, []);
+  }, [isActive, onComplete, setClassification]);
 
   return (
     <g id="classify-stage">
@@ -71,7 +77,7 @@ export const ClassifyStage: React.FC<ClassifyStageProps> = ({ onComplete }) => {
           cx={400}
           cy={300}
           r={3}
-          fill="#a855f7"
+          fill="#ffaa00"
           opacity={0}
         />
       ))}
@@ -86,15 +92,15 @@ export const ClassifyStage: React.FC<ClassifyStageProps> = ({ onComplete }) => {
               width={100}
               height={35}
               rx={4}
-              fill="rgba(59, 130, 246, 0.1)"
-              stroke="#3b82f6"
+              fill="rgba(255, 51, 102, 0.1)"
+              stroke="#ff3366"
               strokeWidth={1}
             />
             <text
               x={300 + i * 120}
               y={172}
               textAnchor="middle"
-              fill="#3b82f6"
+              fill="#ff3366"
               fontSize={14}
               fontWeight="500"
             >
@@ -109,7 +115,7 @@ export const ClassifyStage: React.FC<ClassifyStageProps> = ({ onComplete }) => {
         x="400"
         y="450"
         textAnchor="middle"
-        fill="#a855f7"
+        fill="#ffaa00"
         fontSize="11"
         fontWeight="500"
       >

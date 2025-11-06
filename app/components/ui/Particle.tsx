@@ -4,7 +4,18 @@ import React from "react";
 import styled from "styled-components";
 
 const ParticleCircle = styled.circle`
-  filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.6));
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: pulse 2s ease-in-out infinite;
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
 `;
 
 interface ParticleProps {
@@ -20,8 +31,8 @@ export const Particle: React.FC<ParticleProps> = ({
   id,
   cx = 0,
   cy = 0,
-  r = 3,
-  fill = "#3b82f6",
+  r = 4,
+  fill = "#ff3366",
   className = "particle",
 }) => {
   return (

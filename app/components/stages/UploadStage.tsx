@@ -10,13 +10,23 @@ import { durations } from "@/app/styles/animations";
 
 interface UploadStageProps {
   onComplete?: () => void;
+  isActive?: boolean;
 }
 
-export const UploadStage: React.FC<UploadStageProps> = ({ onComplete }) => {
+export const UploadStage: React.FC<UploadStageProps> = ({
+  onComplete,
+  isActive = false,
+}) => {
   const animationRef = useRef<any>(null);
+  const hasRunRef = useRef(false);
 
   useEffect(() => {
+    // Only run when stage becomes active and hasn't run yet
+    if (!isActive || hasRunRef.current) return;
+
     const runAnimation = async () => {
+      hasRunRef.current = true;
+
       // Wait a bit before starting
       await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -36,9 +46,9 @@ export const UploadStage: React.FC<UploadStageProps> = ({ onComplete }) => {
       // Server glow effect
       animate(".server-upload", {
         filter: [
-          "drop-shadow(0 0 4px rgba(59, 130, 246, 0.4))",
-          "drop-shadow(0 0 20px rgba(59, 130, 246, 0.8))",
-          "drop-shadow(0 0 4px rgba(59, 130, 246, 0.4))",
+          "drop-shadow(0 0 4px rgba(255, 51, 102, 0.4))",
+          "drop-shadow(0 0 20px rgba(255, 51, 102, 0.8))",
+          "drop-shadow(0 0 4px rgba(255, 51, 102, 0.4))",
         ],
         duration: durations.normal,
         ease: "inOutQuad",
@@ -52,7 +62,7 @@ export const UploadStage: React.FC<UploadStageProps> = ({ onComplete }) => {
     };
 
     runAnimation();
-  }, []);
+  }, [isActive, onComplete]);
 
   return (
     <g id="upload-stage">
@@ -64,7 +74,7 @@ export const UploadStage: React.FC<UploadStageProps> = ({ onComplete }) => {
           cx={100}
           cy={300 + i * 15}
           r={5}
-          fill="#3b82f6"
+          fill="#ff3366"
         />
       ))}
 
@@ -76,7 +86,7 @@ export const UploadStage: React.FC<UploadStageProps> = ({ onComplete }) => {
         x="400"
         y="450"
         textAnchor="middle"
-        fill="#3b82f6"
+        fill="#ff3366"
         fontSize="11"
         fontWeight="500"
         className="stage-label"

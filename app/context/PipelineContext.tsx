@@ -37,11 +37,11 @@ interface PipelineContextType {
   fileName: string;
   setFileName: (name: string) => void;
   classification: ClassificationData | null;
-  setClassification: (data: ClassificationData) => void;
+  setClassification: (data: ClassificationData | null) => void;
   vectorData: VectorData | null;
-  setVectorData: (data: VectorData) => void;
+  setVectorData: (data: VectorData | null) => void;
   extractedData: ExtractedData | null;
-  setExtractedData: (data: ExtractedData) => void;
+  setExtractedData: (data: ExtractedData | null) => void;
   isAnimating: boolean;
   setIsAnimating: (value: boolean) => void;
   error: string | null;

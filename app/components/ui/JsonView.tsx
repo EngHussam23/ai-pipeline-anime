@@ -5,57 +5,62 @@ import React from "react";
 import styled from "styled-components";
 
 const JsonContainer = styled.div`
-  background: #000000;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 51, 102, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
   font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.8;
   overflow-x: auto;
-  color: rgba(255, 255, 255, 0.9);
-  transition: border-color 0.2s ease;
+  color: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 50px rgba(255, 51, 102, 0.2),
+    inset 0 0 60px rgba(0, 0, 0, 0.5);
 
   &:hover {
-    border-color: rgba(59, 130, 246, 0.3);
+    border-color: rgba(255, 51, 102, 0.6);
+    box-shadow: 0 15px 60px rgba(255, 51, 102, 0.3),
+      inset 0 0 60px rgba(0, 0, 0, 0.5);
   }
 
   /* Custom scrollbar */
   &::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
+    height: 8px;
+    width: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.5);
-    border-radius: 3px;
+    background: linear-gradient(135deg, #ff3366, #ffaa00);
+    border-radius: 4px;
 
     &:hover {
-      background: rgba(59, 130, 246, 0.7);
+      background: linear-gradient(135deg, #ff6b9d, #ffc44d);
     }
   }
 `;
 
 const JsonKey = styled.span`
-  color: #3b82f6;
-  font-weight: 500;
+  color: #ff3366;
+  font-weight: 600;
 `;
 
 const JsonValue = styled.span`
-  color: #a855f7;
+  color: #ffaa00;
 `;
 
 const JsonString = styled.span`
-  color: #10b981;
+  color: #00ff99;
 `;
 
 const JsonNumber = styled.span`
-  color: #f59e0b;
+  color: #ff6b9d;
 `;
 
 interface JsonViewProps {

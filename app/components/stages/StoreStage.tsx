@@ -7,10 +7,16 @@ import { durations } from "@/app/styles/animations";
 
 interface StoreStageProps {
   onComplete?: () => void;
+  isActive?: boolean;
 }
 
-export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
+export const StoreStage: React.FC<StoreStageProps> = ({
+  onComplete,
+  isActive = false,
+}) => {
   useEffect(() => {
+    if (!isActive) return;
+
     const runAnimation = async () => {
       // Animate database cylinders appearing
       animate(".db-cylinder", {
@@ -59,7 +65,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
     };
 
     runAnimation();
-  }, []);
+  }, [isActive, onComplete]);
 
   return (
     <g id="store-stage">
@@ -72,8 +78,8 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
             cy={270}
             rx={35}
             ry={12}
-            fill="#3b82f6"
-            stroke="#60a5fa"
+            fill="#ff3366"
+            stroke="#ff6b9d"
             strokeWidth={1}
           />
           {/* Cylinder body */}
@@ -83,7 +89,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
             width={70}
             height={80}
             fill="url(#dbGradient)"
-            stroke="#60a5fa"
+            stroke="#ff6b9d"
             strokeWidth={1}
           />
           {/* Cylinder bottom ellipse */}
@@ -93,7 +99,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
             rx={35}
             ry={12}
             fill="#0099cc"
-            stroke="#60a5fa"
+            stroke="#ff6b9d"
             strokeWidth={1}
           />
           {/* Storage indicator lines */}
@@ -104,7 +110,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
               y1={290 + j * 20}
               x2={330 + i * 100}
               y2={290 + j * 20}
-              stroke="#a855f7"
+              stroke="#ffaa00"
               strokeWidth={1}
               opacity={0.6}
             />
@@ -120,7 +126,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
           cx={300 + (i % 3) * 100}
           cy={220}
           r={4}
-          fill="#3b82f6"
+          fill="#ff3366"
           opacity={0}
         />
       ))}
@@ -128,7 +134,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
       {/* Gradient definition */}
       <defs>
         <linearGradient id="dbGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" />
+          <stop offset="0%" stopColor="#ff3366" />
           <stop offset="100%" stopColor="#0099cc" />
         </linearGradient>
       </defs>
@@ -138,7 +144,7 @@ export const StoreStage: React.FC<StoreStageProps> = ({ onComplete }) => {
         x="400"
         y="450"
         textAnchor="middle"
-        fill="#3b82f6"
+        fill="#ff3366"
         fontSize="11"
         fontWeight="500"
       >

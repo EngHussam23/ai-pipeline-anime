@@ -8,12 +8,18 @@ import { usePipeline } from "@/app/context/PipelineContext";
 
 interface ExtractStageProps {
   onComplete?: () => void;
+  isActive?: boolean;
 }
 
-export const ExtractStage: React.FC<ExtractStageProps> = ({ onComplete }) => {
+export const ExtractStage: React.FC<ExtractStageProps> = ({
+  onComplete,
+  isActive = false,
+}) => {
   const { setExtractedData } = usePipeline();
 
   useEffect(() => {
+    if (!isActive) return;
+
     const runAnimation = async () => {
       // Set extracted data
       setExtractedData({
@@ -53,7 +59,7 @@ export const ExtractStage: React.FC<ExtractStageProps> = ({ onComplete }) => {
     };
 
     runAnimation();
-  }, []);
+  }, [isActive, onComplete, setExtractedData]);
 
   const fields = [
     { label: "TITLE", value: "Building Permit", y: 200 },
@@ -74,14 +80,14 @@ export const ExtractStage: React.FC<ExtractStageProps> = ({ onComplete }) => {
               width={300}
               height={30}
               rx={6}
-              fill="rgba(59, 130, 246, 0.1)"
-              stroke="#3b82f6"
+              fill="rgba(255, 51, 102, 0.1)"
+              stroke="#ff3366"
               strokeWidth={1.5}
             />
             <text
               x={260}
               y={field.y + 20}
-              fill="#3b82f6"
+              fill="#ff3366"
               fontSize={12}
               fontWeight="500"
             >
@@ -103,7 +109,7 @@ export const ExtractStage: React.FC<ExtractStageProps> = ({ onComplete }) => {
           y1={360}
           x2={400}
           y2={420}
-          stroke="#3b82f6"
+          stroke="#ff3366"
           strokeWidth={1}
           strokeDasharray="10,5"
           opacity={0}
@@ -115,7 +121,7 @@ export const ExtractStage: React.FC<ExtractStageProps> = ({ onComplete }) => {
         x="400"
         y="450"
         textAnchor="middle"
-        fill="#3b82f6"
+        fill="#ff3366"
         fontSize="11"
         fontWeight="500"
       >

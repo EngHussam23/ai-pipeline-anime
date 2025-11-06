@@ -8,14 +8,18 @@ import { usePipeline } from "@/app/context/PipelineContext";
 
 interface VectorizeStageProps {
   onComplete?: () => void;
+  isActive?: boolean;
 }
 
 export const VectorizeStage: React.FC<VectorizeStageProps> = ({
   onComplete,
+  isActive = false,
 }) => {
   const { setVectorData } = usePipeline();
 
   useEffect(() => {
+    if (!isActive) return;
+
     const runAnimation = async () => {
       const dimensions = [3, 5, 20, 500];
 
@@ -55,12 +59,12 @@ export const VectorizeStage: React.FC<VectorizeStageProps> = ({
     };
 
     runAnimation();
-  }, []);
+  }, [isActive, onComplete, setVectorData]);
 
   return (
     <g id="vectorize-stage">
       {/* Central processing point */}
-      <circle cx={400} cy={300} r={15} fill="#3b82f6" opacity={0.3} />
+      <circle cx={400} cy={300} r={15} fill="#ff3366" opacity={0.3} />
 
       {/* Vector particles */}
       {[...Array(16)].map((_, i) => {
@@ -76,7 +80,7 @@ export const VectorizeStage: React.FC<VectorizeStageProps> = ({
             cx={x}
             cy={y}
             r={4}
-            fill="#3b82f6"
+            fill="#ff3366"
             opacity={0.5}
           />
         );
@@ -97,7 +101,7 @@ export const VectorizeStage: React.FC<VectorizeStageProps> = ({
             y1={300}
             x2={x}
             y2={y}
-            stroke="#a855f7"
+            stroke="#ffaa00"
             strokeWidth={1}
             strokeDasharray="5,5"
             opacity={0}
@@ -110,7 +114,7 @@ export const VectorizeStage: React.FC<VectorizeStageProps> = ({
         x="400"
         y="230"
         textAnchor="middle"
-        fill="#3b82f6"
+        fill="#ff3366"
         fontSize="24"
         fontWeight="500"
         className="dimension-text"
@@ -123,7 +127,7 @@ export const VectorizeStage: React.FC<VectorizeStageProps> = ({
         x="400"
         y="450"
         textAnchor="middle"
-        fill="#3b82f6"
+        fill="#ff3366"
         fontSize="11"
         fontWeight="500"
       >
