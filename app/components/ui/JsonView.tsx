@@ -5,24 +5,24 @@ import React from "react";
 import styled from "styled-components";
 
 const JsonContainer = styled.div`
-  background: rgba(0, 0, 0, 0.8);
-  border: 2px solid rgba(255, 51, 102, 0.3);
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
   border-radius: 20px;
   padding: 2rem;
   font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
   font-size: 0.95rem;
   line-height: 1.8;
   overflow-x: auto;
-  color: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
   transition: all 0.3s ease;
   backdrop-filter: blur(20px);
-  box-shadow: 0 10px 50px rgba(255, 51, 102, 0.2),
-    inset 0 0 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
 
   &:hover {
-    border-color: rgba(255, 51, 102, 0.6);
-    box-shadow: 0 15px 60px rgba(255, 51, 102, 0.3),
-      inset 0 0 60px rgba(0, 0, 0, 0.5);
+    border-color: #6366f1;
+    box-shadow: 0 15px 50px rgba(99, 102, 241, 0.12),
+      0 8px 16px rgba(0, 0, 0, 0.08);
   }
 
   /* Custom scrollbar */
@@ -32,35 +32,35 @@ const JsonContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.5);
+    background: #f1f5f9;
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #ff3366, #ffaa00);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border-radius: 4px;
 
     &:hover {
-      background: linear-gradient(135deg, #ff6b9d, #ffc44d);
+      background: linear-gradient(135deg, #818cf8, #a78bfa);
     }
   }
 `;
 
 const JsonKey = styled.span`
-  color: #ff3366;
+  color: #6366f1;
   font-weight: 600;
 `;
 
 const JsonValue = styled.span`
-  color: #ffaa00;
+  color: #8b5cf6;
 `;
 
 const JsonString = styled.span`
-  color: #00ff99;
+  color: #14b8a6;
 `;
 
 const JsonNumber = styled.span`
-  color: #ff6b9d;
+  color: #ec4899;
 `;
 
 interface JsonViewProps {
@@ -129,7 +129,7 @@ export const JsonView: React.FC<JsonViewProps> = ({ data, className = "" }) => {
 
   return (
     <JsonContainer className={className}>
-      <pre style={{ margin: 0, color: "#e0e7ff", lineHeight: "1.6" }}>
+      <pre style={{ margin: 0, color: "#475569", lineHeight: "1.6" }}>
         {renderValue(data)}
       </pre>
     </JsonContainer>

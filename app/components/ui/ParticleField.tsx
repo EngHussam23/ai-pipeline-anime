@@ -11,7 +11,7 @@ const Canvas = styled.canvas`
   height: 100%;
   pointer-events: none;
   z-index: 5;
-  opacity: 0.4;
+  opacity: 0.3;
 `;
 
 interface Particle {
@@ -45,7 +45,7 @@ export const ParticleField: React.FC = () => {
     window.addEventListener("resize", resizeCanvas);
 
     // Create particles
-    const colors = ["#ff3366", "#ffaa00", "#00ff99", "#ff6b9d"];
+    const colors = ["#6366f1", "#8b5cf6", "#ec4899", "#14b8a6"];
     const particleCount = 20; // Reduced from 25 for smaller canvas
 
     particlesRef.current = Array.from({ length: particleCount }, () => ({
@@ -60,7 +60,7 @@ export const ParticleField: React.FC = () => {
 
     // Animation loop
     const animate = () => {
-      ctx.fillStyle = "rgba(15, 15, 15, 0.05)";
+      ctx.fillStyle = "rgba(245, 247, 250, 0.08)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((particle) => {
@@ -112,8 +112,8 @@ export const ParticleField: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 51, 102, ${
-              0.15 * (1 - distance / 120)
+            ctx.strokeStyle = `rgba(99, 102, 241, ${
+              0.12 * (1 - distance / 120)
             })`; // Reduced opacity
             ctx.lineWidth = 0.5;
             ctx.stroke();
