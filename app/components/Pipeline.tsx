@@ -25,11 +25,6 @@ const pulse = keyframes`
   50% { opacity: 1; transform: scale(1.05); }
 `;
 
-const shimmer = keyframes`
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-`;
-
 const PipelineContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -94,46 +89,18 @@ const ContentWrapper = styled.div`
   gap: 1.5rem;
 `;
 
-const Header = styled.div`
-  text-align: center;
-  margin: 1.5rem 0 1rem;
-`;
-
-const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: ${shimmer} 3s linear infinite;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  line-height: 1;
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.2rem;
-  color: #64748b;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-
-  @media (max-width: 768px) {
-    font-size: 0.875rem;
-  }
-`;
-const MainContent = styled.div`
+const MainContent = styled.div<{ $showResults: boolean }>`
   width: 100%;
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: ${(props) =>
+    props.$showResults ? "240px 1fr 400px" : "240px 1fr"};
   gap: 1.5rem;
+  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (max-width: 1400px) {
+    grid-template-columns: ${(props) =>
+      props.$showResults ? "240px 1fr 350px" : "240px 1fr"};
+  }
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -296,50 +263,69 @@ const SvgContainer = styled.div`
   z-index: 2;
 `;
 
-const ControlPanel = styled.div`
+const ResultsContainer = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-  position: sticky;
-  bottom: 2rem;
-  z-index: 100;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 60px;
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.15),
-    0 8px 16px rgba(0, 0, 0, 0.08);
+
+  @media (max-width: 1024px) {
+    margin-top: 1.5rem;
+  }
 `;
 
-const ActionButton = styled.button<{
-  $variant?: "primary" | "secondary";
-  $color?: string;
-}>`
-  padding: 1rem 2.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: ${(props) => (props.$variant === "primary" ? "#ffffff" : "#475569")};
-  background: ${(props) =>
-    props.$variant === "primary"
-      ? `linear-gradient(135deg, #6366f1, #8b5cf6)`
-      : "transparent"};
-  border: 2px solid
-    ${(props) => (props.$variant === "primary" ? "transparent" : "#cbd5e1")};
-  border-radius: 60px;
+const ResultsPanel = styled.div`
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  animation: ${float} 0.5s ease-out;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 3px;
+  }
+`;
+
+const ResultsTitle = styled.h2`
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+`;
+
+const UploadButton = styled.button`
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
   position: relative;
   overflow: hidden;
-  box-shadow: ${(props) =>
-    props.$variant === "primary"
-      ? `0 10px 30px rgba(99, 102, 241, 0.4)`
-      : "none"};
 
   &::before {
     content: "";
@@ -361,12 +347,7 @@ const ActionButton = styled.button<{
 
   &:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: ${(props) =>
-      props.$variant === "primary"
-        ? `0 15px 50px rgba(99, 102, 241, 0.5)`
-        : "0 10px 30px rgba(0, 0, 0, 0.08)"};
-    border-color: ${(props) =>
-      props.$variant === "primary" ? "transparent" : "#6366f1"};
+    box-shadow: 0 15px 50px rgba(99, 102, 241, 0.4);
   }
 
   &:active {
@@ -383,24 +364,6 @@ const ActionButton = styled.button<{
     position: relative;
     z-index: 1;
   }
-`;
-
-const ResultsContainer = styled.div`
-  width: 100%;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-`;
-
-const ResultsTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
 `;
 
 const stages = [
@@ -463,8 +426,14 @@ export default function Pipeline() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && !isAnimating) {
+      // Reset everything first
+      setExtractedData(null);
+      setClassification(null);
+      setVectorData(null);
       setCompletedStages([]);
       setShowResults(false);
+
+      // Start the pipeline
       setCurrentStage("upload");
       setIsAnimating(true);
     }
@@ -476,59 +445,43 @@ export default function Pipeline() {
     }
   };
 
-  const resetPipeline = () => {
-    setCompletedStages([]);
-    setShowResults(false);
-    setCurrentStage("upload");
-    setIsAnimating(false);
-    // Clear all data
-    setExtractedData(null);
-    setClassification(null);
-    setVectorData(null);
-  };
-
   return (
     <PipelineContainer>
       <ParticleField />
       <GridBackground />
 
-      {/* Floating orbs */}
+      {/* Floating orbs with light theme colors */}
       <FloatingOrb
         $delay={0}
         $size={400}
-        $color="#ff3366"
+        $color="#6366f1"
         $top="10%"
         $left="10%"
       />
       <FloatingOrb
         $delay={2}
         $size={300}
-        $color="#ffaa00"
+        $color="#ec4899"
         $top="60%"
         $left="70%"
       />
       <FloatingOrb
         $delay={4}
         $size={350}
-        $color="#00ff99"
+        $color="#8b5cf6"
         $top="30%"
         $left="80%"
       />
       <FloatingOrb
         $delay={1}
         $size={250}
-        $color="#ff6b9d"
+        $color="#14b8a6"
         $top="70%"
         $left="20%"
       />
 
       <ContentWrapper>
-        <Header>
-          <Title>AI Pipeline</Title>
-          <Subtitle>Document Processing Visualization</Subtitle>
-        </Header>
-
-        <MainContent>
+        <MainContent $showResults={showResults && !!extractedData}>
           <Sidebar>
             {stages.map((stage, index) => (
               <StageCard
@@ -549,6 +502,19 @@ export default function Pipeline() {
                 <StageDescription>{stage.desc}</StageDescription>
               </StageCard>
             ))}
+
+            {/* Upload button integrated in sidebar */}
+            <UploadButton onClick={startDemo} disabled={isAnimating}>
+              <span>{isAnimating ? "Processing..." : "Upload Document"}</span>
+            </UploadButton>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={handleFileUpload}
+              style={{ display: "none" }}
+              accept=".pdf,.doc,.docx,.txt"
+            />
           </Sidebar>
 
           <VisualizationArea>
@@ -592,39 +558,16 @@ export default function Pipeline() {
               </svg>
             </SvgContainer>
           </VisualizationArea>
-        </MainContent>
 
-        <ControlPanel>
-          <input
-            ref={fileInputRef}
-            type="file"
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-            accept=".pdf,.doc,.docx,.txt"
-          />
-
-          <ActionButton
-            $variant="primary"
-            $color="#ff3366"
-            onClick={startDemo}
-            disabled={isAnimating}
-          >
-            <span>{isAnimating ? "Processing..." : "Launch Pipeline"}</span>
-          </ActionButton>
-
-          {(showResults || completedStages.length > 0) && (
-            <ActionButton $variant="secondary" onClick={resetPipeline}>
-              <span>Reset</span>
-            </ActionButton>
+          {showResults && extractedData && (
+            <ResultsContainer>
+              <ResultsPanel>
+                <ResultsTitle>Extracted Data</ResultsTitle>
+                <JsonView data={extractedData} />
+              </ResultsPanel>
+            </ResultsContainer>
           )}
-        </ControlPanel>
-
-        {showResults && extractedData && (
-          <ResultsContainer>
-            <ResultsTitle>Extracted Data</ResultsTitle>
-            <JsonView data={extractedData} />
-          </ResultsContainer>
-        )}
+        </MainContent>
       </ContentWrapper>
     </PipelineContainer>
   );
